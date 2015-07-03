@@ -22,3 +22,11 @@ class TriangularFace:
         self.plane = MathMethods.calculate_triangular_plane(self.vertexC, self.vertexB, self.vertexA)
         return
 
+    def __contains__(self, point):
+        for p in self.points:
+            if p[0] == point[0]:
+                if p[1] == point[1]:
+                    if p[2] == point[2]:
+                        return True
+        return False
+
