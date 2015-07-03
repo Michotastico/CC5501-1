@@ -26,9 +26,9 @@ def euclidean_distance(a, b):
     return distance
 
 def first_segment(extremes):
-    segment = max({euclidean_distance(extremes[0][0],extremes[0][1]): extremes[0]},
-                  {euclidean_distance(extremes[1][0],extremes[1][1]): extremes[1]},
-                   {euclidean_distance(extremes[2][0],extremes[2][1]): extremes[2]})
+    segment = max({euclidean_distance(extremes[0][0], extremes[0][1]): extremes[0]},
+                  {euclidean_distance(extremes[1][0], extremes[1][1]): extremes[1]},
+                   {euclidean_distance(extremes[2][0], extremes[2][1]): extremes[2]})
     return segment.values()[0]
 
 def farthest_point(segment, cloud):
@@ -52,3 +52,17 @@ def distance_line_point(m, s, p):
     dot = np.cross(np.array(mm, np.float), np.array(p, np.float))
     value = np.linalg.norm(dot)/np.linalg.norm(s)
     return value
+
+def calculate_triangular_plane(a, b, c):
+    ba = (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+    bc = (c[0] - b[0], c[1] - b[1], c[2] - b[2])
+    cross = np.cross(np.array(ba, np.float), np.array(bc, np.float))
+    d = 0 - (cross[0] * a[0] + cross[1] * a[1] + cross[2] * a[2])
+    plane = (cross[0], cross[1], cross[2], d)
+    return plane
+
+def point_plane_distance(point, plane):
+    upper = np.absolute(plane[0] * point[0] + plane[1] * point[1] + plane[2] * point[2] + plane[3])
+    down = np.sqrt(np.power(plane[0], 2) + np.power(plane[1], 2) + np.power(plane[2], 2))
+    distance = upper/down
+    return distance
