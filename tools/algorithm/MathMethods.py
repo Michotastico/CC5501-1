@@ -42,6 +42,16 @@ def farthest_point(segment, cloud):
             point = p
     return point
 
+def farthest_point_plane(plane, cloud):
+    distance = 0
+    point = None
+    for p in cloud:
+        d = point_plane_distance(p, plane)
+        if d > distance:
+            distance = d
+            point = p
+    return point
+
 def get_line_vector(a, b):
     M = (a[0], a[1], a[2])
     s = (b[0]-a[0], b[1]-a[1], b[2]-a[2])
@@ -62,7 +72,11 @@ def calculate_triangular_plane(a, b, c):
     return plane
 
 def point_plane_distance(point, plane):
-    upper = np.absolute(plane[0] * point[0] + plane[1] * point[1] + plane[2] * point[2] + plane[3])
+    distance = np.absolute(point_plane_distance_no_abs(point, plane))
+    return distance
+
+def point_plane_distance_no_abs(point, plane):
+    upper = (plane[0] * point[0] + plane[1] * point[1] + plane[2] * point[2] + plane[3])
     down = np.sqrt(np.power(plane[0], 2) + np.power(plane[1], 2) + np.power(plane[2], 2))
     distance = upper/down
     return distance
