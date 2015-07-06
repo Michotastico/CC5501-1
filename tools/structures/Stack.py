@@ -11,7 +11,10 @@ class Stack:
         return
 
     def pop(self):
-        return self.stack.pop()
+        if len(self.stack) != 0:
+            return self.stack.pop()
+        else:
+            return False
 
     def multi_pop(self, point):
         faces = list()

@@ -13,7 +13,7 @@ class TriangularFace:
         return
 
     def add_point(self, point):
-        distance = MathMethods.point_plane_distance_no_abs(point, self.plane)
+        distance = self.distance(point)
         if distance > 0:
             self.points.append(point)
         return
@@ -33,3 +33,19 @@ class TriangularFace:
     def distance(self, point):
         return MathMethods.point_plane_distance_no_abs(point, self.plane)
 
+    def get_farthest_point(self):
+        distance = 0
+        point = None
+        for p in self.points:
+            d = self.distance(p)
+            if d > distance:
+                distance = d
+                point = p
+        self.points.remove(point)
+        return point
+
+    def get_points(self):
+        return self.points
+
+    def get_len_points(self):
+        return len(self.points)
