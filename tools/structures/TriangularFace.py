@@ -30,3 +30,6 @@ class TriangularFace:
                         return True
         return False
 
+    def distance(self, point):
+        return MathMethods.point_plane_distance_no_abs(point, self.plane)
+
