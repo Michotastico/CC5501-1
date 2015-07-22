@@ -49,3 +49,21 @@ class TriangularFace:
 
     def get_len_points(self):
         return len(self.points)
+
+    def a(self):
+        return self.vertexA
+
+    def b(self):
+        return self.vertexB
+
+    def c(self):
+        return self.vertexC
+
+    def is_neighbor(self, triangle):
+        va = triangle.a()
+        vb = triangle.b()
+        vc = triangle.c()
+        bool1 = self.__contains__(va) & self.__contains__(vb)
+        bool2 = self.__contains__(vb) & self.__contains__(vc)
+        bool3 = self.__contains__(va) & self.__contains__(vc)
+        return bool1|bool2|bool3
