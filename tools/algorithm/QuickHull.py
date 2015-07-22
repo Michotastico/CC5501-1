@@ -2,6 +2,8 @@ __author__ = 'Michel Llorens'
 __email__ = "mllorens@dcc.uchile.cl"
 from MathMethods import *
 from tools.structures import TriangularFace, Stack
+
+
 class QuickHull:
 
     def __init__(self, cloud):
@@ -11,7 +13,7 @@ class QuickHull:
         return
 
     def initialization(self):
-        self.initial_faces(self.cloud)
+        self.initial_faces()
         return
 
     def step(self):
@@ -41,7 +43,7 @@ class QuickHull:
             new_faces.append(face_3)
 
         else:
-            # generic step
+            # generic step TODO
             pass
 
         # Assign points to faces
@@ -102,7 +104,4 @@ class QuickHull:
 
         for f in faces:
             self.stack.push(f)
-
         return
-
-
