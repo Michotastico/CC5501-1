@@ -16,6 +16,15 @@ class QuickHull:
         self.initial_faces()
         return
 
+    def run(self):
+        self.initialization()
+        while not self.stack.empty():
+            self.step()
+        return
+
+    def get_faces(self):
+        return self.final_faces
+
     def step(self):
         face = self.stack.pop()
         if not face:
