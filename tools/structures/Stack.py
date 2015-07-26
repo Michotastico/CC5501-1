@@ -11,7 +11,7 @@ class Stack:
         return
 
     def pop(self):
-        if len(self.stack) != 0:
+        if not self.empty():
             return self.stack.pop()
         else:
             return False
@@ -26,3 +26,7 @@ class Stack:
 
         return faces
 
+    def empty(self):
+        if len(self.stack) == 0:
+            return True
+        return False
