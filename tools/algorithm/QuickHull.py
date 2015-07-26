@@ -1,7 +1,7 @@
 __author__ = 'Michel Llorens'
 __email__ = "mllorens@dcc.uchile.cl"
 from MathMethods import *
-from tools.structures import TriangularFace, Stack
+from tools.structures import TriangularFace, Stack, Edge
 
 
 class QuickHull:
@@ -34,17 +34,58 @@ class QuickHull:
 
         # Create new triangular faces from the edges of all visible faces to the farthest point (apex)
         new_faces = list()
-        if len(other_faces) == 0:
-            face_1 = TriangularFace.TriangularFace(face.vertexA, face.vertexB, point)
-            face_2 = TriangularFace.TriangularFace(face.vertexB, face.vertexC, point)
-            face_3 = TriangularFace.TriangularFace(face.vertexC, face.vertexA, point)
-            new_faces.append(face_1)
-            new_faces.append(face_2)
-            new_faces.append(face_3)
 
-        else:
-            # generic step TODO
-            pass
+        # Create a list of edges and check duplicated edges. If the edge isn't duplicated
+        # Then the edge is from the borderline and we can build a triangle from this one.
+        # TODO
+
+        edges = list()
+
+        edges.append(Edge.Edge(face.a(), face.b()))
+        edges.append(Edge.Edge(face.b(), face.c()))
+        edges.append(Edge.Edge(face.c(), face.a()))
+
+        # Add new edges from every face.
+        for f in other_faces:
+            # Create edges
+            edge1 = Edge.Edge(f.a(), f.b())
+            edge2 = Edge.Edge(f.b(), f.c())
+            edge3 = Edge.Edge(f.c(), f.a())
+            # Set boolean for duplicated edges
+            bool1 = False
+            bool2 = False
+            bool3 = False
+            # List for elements duplicated
+            delete_list = list()
+
+            # Check for every appended edge.
+            for e in edges:
+                # If the edge is equals to one of the news, check the boolean and append to delete list
+                if e.is_equals(edge1):
+                    bool1 = True
+                    delete_list.append(e)
+                if e.is_equals(edge2):
+                    bool2 = True
+                    delete_list.append(e)
+                if e.is_equals(edge3):
+                    bool3 = True
+                    delete_list.append(e)
+            # Remove internal edges
+            for d in delete_list:
+                edges.remove(d)
+            # Add external edges
+            if not bool1:
+                edges.append(edge1)
+            if not bool2:
+                edges.append(edge2)
+            if not bool3:
+                edges.append(edge3)
+
+        # Now we have the borderline.
+
+        for edge in edges:
+            triangle = TriangularFace.TriangularFace(edge.a(), edge.b(), point)
+            new_faces.append(triangle)
 
         # Assign points to faces
         for p in all_points:
