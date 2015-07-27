@@ -1,6 +1,7 @@
 __author__ = 'Michel Llorens'
 __email__ = "mllorens@dcc.uchile.cl"
 from tools.algorithm import MathMethods
+import numpy as np
 
 
 class TriangularFace:
@@ -59,4 +60,19 @@ class TriangularFace:
 
     def c(self):
         return self.vertexC
+
+    def middle_point(self):
+        va = np.array(self.vertexA, np.float)
+        vb = np.array(self.vertexB, np.float)
+        vc = np.array(self.vertexC, np.float)
+
+        mid_a = (va[0] + vb[0] + vc[0])/3.0
+        mid_b = (va[1] + vb[1] + vc[1])/3.0
+        mid_c = (va[2] + vb[2] + vc[2])/3.0
+        mid = (mid_a, mid_b, mid_c)
+        return mid
+
+    def __str__(self):
+        string = "Face with vertex "+str(self.a())+" ; "+str(self.b())+" ; "+str(self.c())
+        return string
 

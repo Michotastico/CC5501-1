@@ -30,3 +30,18 @@ class Stack:
         if len(self.stack) == 0:
             return True
         return False
+
+    def get_all_points(self):
+        all_points = list()
+        for face in self.stack:
+            all_points.extend(face.get_points())
+        return all_points
+
+    def __str__(self):
+        string = "Stack:\n"
+        for f in self.stack:
+            string = string + str(f) + "\n"
+
+        string = string + "End Stack\n"
+
+        return string
