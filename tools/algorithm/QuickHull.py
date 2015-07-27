@@ -26,6 +26,7 @@ class QuickHull:
         return self.final_faces
 
     def step(self):
+        all_points = self.stack.get_all_points()
         face = self.stack.pop()
         if not face:
             return
@@ -36,10 +37,10 @@ class QuickHull:
 
         point = face.get_farthest_point()
         other_faces = self.stack.multi_pop(point)
-        all_points = list()
-        all_points.extend(face.get_points())
-        for f in other_faces:
-            all_points.extend(f.get_points())
+        #all_points = list()
+        #all_points.extend(face.get_points())
+        #for f in other_faces:
+        #    all_points.extend(f.get_points())
 
         # Create new triangular faces from the edges of all visible faces to the farthest point (apex)
         new_faces = list()
@@ -73,10 +74,10 @@ class QuickHull:
                 if e.is_equals(edge1):
                     bool1 = True
                     delete_list.append(e)
-                if e.is_equals(edge2):
+                elif e.is_equals(edge2):
                     bool2 = True
                     delete_list.append(e)
-                if e.is_equals(edge3):
+                elif e.is_equals(edge3):
                     bool3 = True
                     delete_list.append(e)
             # Remove internal edges
@@ -95,6 +96,14 @@ class QuickHull:
         for edge in edges:
             triangle = TriangularFace.TriangularFace(edge.a(), edge.b(), point)
             new_faces.append(triangle)
+
+        for f in new_faces:
+            for ff in new_faces:
+                if ff != f:
+                    distance = f.distance(ff.middle_point())
+                    if  distance > 0:
+                        f.invert_normal()
+                        break
 
         # Assign points to faces
         for p in all_points:
