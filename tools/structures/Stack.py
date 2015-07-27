@@ -35,7 +35,26 @@ class Stack:
         all_points = list()
         for face in self.stack:
             all_points.extend(face.get_points())
-        return all_points
+        return self.delete_duplicated_points(all_points)
+
+    def delete_duplicated_points(self, points):
+        final_points = list()
+        while len(points) != 0:
+            p = points.pop()
+            to_delete = list()
+            duplicated = False
+            for pp in points:
+                if p[0] == pp[0]:
+                    if p[1] == pp[1]:
+                        if p[2] == pp[2]:
+                            duplicated = True
+                            to_delete.append(pp)
+            final_points.append(p)
+            if duplicated:
+                for ptd in to_delete:
+                    if points.index(ptd) >= 0:
+                        points.remove(ptd)
+        return final_points
 
     def __str__(self):
         string = "Stack:\n"
