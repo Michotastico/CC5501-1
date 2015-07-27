@@ -20,16 +20,23 @@ cloud.append((0, 0, -1))
 quick_hull = QuickHull(cloud)
 quick_hull.run()
 faces = quick_hull.get_faces()
-
+for ff in faces:
+    print ff
 
 def figure():
-    glBegin(OpenGL.GL.GL_LINES)
+    a = 0.1
+    b = 0.2
+    c = 0.3
     for f in faces:
+        glBegin(OpenGL.GL.GL_TRIANGLES)
+        glColor3f(a, b, c)
         glVertex3fv(f.a())
         glVertex3fv(f.b())
         glVertex3fv(f.c())
-    glEnd()
-
+        glEnd()
+        a += 0.1
+        b += 0.1
+        c += 0.1
 
 def main():
     pygame.init()
