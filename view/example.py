@@ -13,9 +13,10 @@ from tools.algorithm import RandomFactory
 import Bottle
 import Can
 import SpriteBottle
+import house
 
 # cloud = list()
-cloud = Bottle.point_cloud
+cloud = SpriteBottle.point_cloud
 '''
 RandomFactory.make_points(0, 10, 100)
 for p in points_list:
@@ -33,7 +34,9 @@ cloud.append((-5, 5, -5))
 cloud.append((-5, 5, -5))
 cloud.append((0, 0, 0))'''
 
-quick_hull = QuickHull(cloud,1)
+#bottle 0.09
+
+quick_hull = QuickHull(cloud, 0.09)
 quick_hull.run()
 faces = quick_hull.get_faces()
 # for ff in faces:
@@ -62,8 +65,8 @@ def main():
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
     #glTranslatef(0.0, 0.0, -20)
-    camera = [0, 0, -30]
-    zoom = -30
+    camera = [0, 0, -100]
+    zoom = -15
     gluLookAt(camera[0], camera[1], zoom, 0, 0, 0,  0, 1, 0);
     while True:
         for event in pygame.event.get():
