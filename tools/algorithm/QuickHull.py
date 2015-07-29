@@ -6,9 +6,9 @@ from tools.structures import TriangularFace, Stack, Edge
 
 class QuickHull:
 
-    def __init__(self, cloud):
+    def __init__(self, cloud, delta):
         self.cloud = cloud
-        self.stack = Stack.Stack()
+        self.stack = Stack.Stack(delta)
         self.final_faces = list()
         return
 
@@ -19,6 +19,9 @@ class QuickHull:
     def run(self):
         self.initialization()
         while not self.stack.empty():
+            n = len(self.stack.get_all_points())
+            print "Puntos restantes: "+str(n)+" Caras listas: "+str(len(self.final_faces))+" Caras por resolver: "+str(self.stack.size())
+
             self.step()
         return
 
@@ -37,10 +40,6 @@ class QuickHull:
 
         point = face.get_farthest_point()
         other_faces = self.stack.multi_pop(point)
-        #all_points = list()
-        #all_points.extend(face.get_points())
-        #for f in other_faces:
-        #    all_points.extend(f.get_points())
 
         # Create new triangular faces from the edges of all visible faces to the farthest point (apex)
         new_faces = list()

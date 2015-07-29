@@ -10,10 +10,17 @@ from OpenGL.GLU import *
 from tools.algorithm.QuickHull import QuickHull
 from tools.algorithm import RandomFactory
 
-cloud = list()
-'''points_list = RandomFactory.make_points(0, 10, 100)
+import Bottle
+import Can
+import SpriteBottle
+
+# cloud = list()
+cloud = Bottle.point_cloud
+'''
+RandomFactory.make_points(0, 10, 100)
 for p in points_list:
-    cloud.append(p)'''
+    cloud.append(p)
+
 cloud.append((1, 0, 0))
 cloud.append((-1, 0, 0))
 cloud.append((0, 1, 0))
@@ -24,9 +31,9 @@ cloud.append((2, 2, 2))
 cloud.append((-5, -5, -5))
 cloud.append((-5, 5, -5))
 cloud.append((-5, 5, -5))
-cloud.append((0, 0, 0))
+cloud.append((0, 0, 0))'''
 
-quick_hull = QuickHull(cloud)
+quick_hull = QuickHull(cloud,1)
 quick_hull.run()
 faces = quick_hull.get_faces()
 # for ff in faces:
@@ -43,9 +50,9 @@ def figure():
         glVertex3fv(f.b())
         glVertex3fv(f.c())
         glEnd()
-        a += 0.1
-        b += 0.1
-        c += 0.1
+        a += 0.001
+        b += 0.001
+        c += 0.001
 
 def main():
     pygame.init()
@@ -54,13 +61,20 @@ def main():
 
     gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
-    glTranslatef(0.0, 0.0, -20)
-
+    #glTranslatef(0.0, 0.0, -20)
+    camera = [0, 0, -30]
+    zoom = -30
+    gluLookAt(camera[0], camera[1], zoom, 0, 0, 0,  0, 1, 0);
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    zoom += 10
+                if event.key == pygame.K_2:
+                    zoom -= 10
 
         glRotatef(1, 3, 1, 1)
         glClear(OpenGL.GL.GL_COLOR_BUFFER_BIT | OpenGL.GL.GL_DEPTH_BUFFER_BIT)

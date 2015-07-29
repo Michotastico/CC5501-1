@@ -2,8 +2,9 @@ __author__ = 'Michel Llorens'
 __email__ = "mllorens@dcc.uchile.cl"
 class Stack:
 
-    def __init__(self):
+    def __init__(self, delta):
         self.stack = list()
+        self.DELTA = delta
         return
 
     def push(self, face):
@@ -44,9 +45,9 @@ class Stack:
             to_delete = list()
             duplicated = False
             for pp in points:
-                if p[0] == pp[0]:
-                    if p[1] == pp[1]:
-                        if p[2] == pp[2]:
+                if (p[0] <= pp[0]+self.DELTA) & (p[0] >= pp[0]-self.DELTA):
+                    if (p[1] <= pp[1]+self.DELTA) & (p[1] >= pp[1]-self.DELTA):
+                        if (p[2] <= pp[2]+self.DELTA) & (p[1] >= pp[1]-self.DELTA):
                             duplicated = True
                             to_delete.append(pp)
             final_points.append(p)
@@ -64,3 +65,6 @@ class Stack:
         string = string + "End Stack\n"
 
         return string
+
+    def size(self):
+        return len(self.stack)
