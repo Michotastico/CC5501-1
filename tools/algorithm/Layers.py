@@ -19,11 +19,11 @@ class Layers:
             faces = algorithm.get_faces()
             self.layers.append(faces)
             for f in faces:
-                if self.cloud.index(f.a()) >= 0:
+                if f.a() in self.cloud:
                     self.cloud.remove(f.a())
-                if self.cloud.index(f.b()) >= 0:
+                if f.b() in self.cloud:
                     self.cloud.remove(f.b())
-                if self.cloud.index(f.c()) >= 0:
+                if f.c() in self.cloud:
                     self.cloud.remove(f.c())
 
     def get_layers(self):

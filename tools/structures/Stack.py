@@ -53,7 +53,7 @@ class Stack:
             final_points.append(p)
             if duplicated:
                 for ptd in to_delete:
-                    if points.index(ptd) >= 0:
+                    if ptd in points:
                         points.remove(ptd)
         return final_points
 
